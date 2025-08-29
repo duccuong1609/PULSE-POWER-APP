@@ -1,8 +1,8 @@
-import { ChartAreaInteractive } from "@/components/chart-area-interactive"
-import { DataTable } from "@/components/data-table"
+import { ChartAreaInteractive } from "@/features/dashboard/components/section-chart-area"
+import { DataTable } from "@/features/dashboard/components/section-table"
 import { SectionCards } from "@/features/dashboard/components/section-cards"
 
-import data from "./data.json"
+import data from "./sale-data.json"
 import { SiteHeader } from "@/components/site-header"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
@@ -55,15 +55,15 @@ const useDateRangePicker = () => {
 const useTimeRangeFilter = () => {
   return <div className="flex gap-2 items-center">
     {useDateRangePicker()}
-    <strong>
+    <Label htmlFor="time-range">
       Or
-    </strong>
+    </Label>
     <Select defaultValue="7days">
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select time range" />
       </SelectTrigger>
       <SelectContent>
-        <SelectGroup>
+        <SelectGroup >
           <SelectLabel>Time Range</SelectLabel>
           <SelectItem value="7days">7 Days</SelectItem>
           <SelectItem value="1month">1 Month</SelectItem>

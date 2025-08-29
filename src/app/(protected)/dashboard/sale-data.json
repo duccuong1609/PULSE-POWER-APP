@@ -1,0 +1,167 @@
+[
+  {
+    "id": 1,
+    "invoice_id": "HDO1754869238599",
+    "invoice_date": "2025-08-11",
+    "customer_id": "KH000525",
+    "product_id": "SP000002",
+    "product_name": "Thủ mì 2 500gr",
+    "quantity": 30,
+    "address": "123 Lê Lợi, Quận 1, TP.HCM",
+    "customer_name": "Nguyễn Văn A"
+  },
+  {
+    "id": 2,
+    "invoice_id": "HDO1754869238599",
+    "invoice_date": "2025-08-11",
+    "customer_id": "KH000525",
+    "product_id": "SP000007",
+    "product_name": "Bò Mì 2 1ky",
+    "quantity": 10,
+    "address": "45 Trần Hưng Đạo, Quận 5, TP.HCM",
+    "customer_name": "Trần Thị B"
+  },
+  {
+    "id": 3,
+    "invoice_id": "HD000003",
+    "invoice_date": "2025-08-07",
+    "customer_id": "KH434295",
+    "product_id": "SP000007",
+    "product_name": "Bò Mì 2 1ky",
+    "quantity": 24,
+    "address": "83332 White Hills Suite 363, New Diane, SC 82104",
+    "customer_name": "Pamela Perry"
+  },
+  {
+    "id": 4,
+    "invoice_id": "HD000004",
+    "invoice_date": "2025-07-10",
+    "customer_id": "KH529602",
+    "product_id": "SP000035",
+    "product_name": "Nem Chua 2 ( Bịch Xanh )",
+    "quantity": 26,
+    "address": "32502 Koch Coves, Harperland, DE 54413",
+    "customer_name": "Nicholas Ramos"
+  },
+  {
+    "id": 5,
+    "invoice_id": "HD000005",
+    "invoice_date": "2025-07-25",
+    "customer_id": "KH431314",
+    "product_id": "SP000058",
+    "product_name": "XÚC XÍCH 500gr",
+    "quantity": 47,
+    "address": "67211 Mary Neck Apt. 042, North Thomasland, DE 31003",
+    "customer_name": "Timothy Pineda"
+  },
+  {
+    "id": 6,
+    "invoice_id": "HD000006",
+    "invoice_date": "2025-08-26",
+    "customer_id": "KH558794",
+    "product_id": "SP000018",
+    "product_name": "Dabao đỏ 2 500GR",
+    "quantity": 20,
+    "address": "154 Ruth Harbor, Lauraside, AK 38238",
+    "customer_name": "Dr. Angel Oconnor"
+  },
+  {
+    "id": 7,
+    "invoice_id": "HD000007",
+    "invoice_date": "2025-07-25",
+    "customer_id": "KH189852",
+    "product_id": "SP000058",
+    "product_name": "XÚC XÍCH 500gr",
+    "quantity": 22,
+    "address": "22391 Baker Point Apt. 442, Juliaberg, FL 86272",
+    "customer_name": "Brittany Thompson"
+  },
+  {
+    "id": 8,
+    "invoice_id": "HD000008",
+    "invoice_date": "2025-07-21",
+    "customer_id": "KH748524",
+    "product_id": "SP000007",
+    "product_name": "Bò Mì 2 1ky",
+    "quantity": 83,
+    "address": "Unit 2432 Box 5231, DPO AE 88801",
+    "customer_name": "Christopher Nguyen"
+  },
+  {
+    "id": 9,
+    "invoice_id": "HD000009",
+    "invoice_date": "2025-08-03",
+    "customer_id": "KH433508",
+    "product_id": "SP000015",
+    "product_name": "Lụa Ống 2 1kg",
+    "quantity": 47,
+    "address": "7546 Hart Flat, Heatherfurt, MS 65303",
+    "customer_name": "Mark Tran"
+  },
+  {
+    "id": 10,
+    "invoice_id": "HD000010",
+    "invoice_date": "2025-08-19",
+    "customer_id": "KH383693",
+    "product_id": "SP000034",
+    "product_name": "Bơ",
+    "quantity": 86,
+    "address": "1232 Amanda Drive, New Joshuachester, WI 69223",
+    "customer_name": "Leslie Gray"
+  },
+  {
+    "id": 11,
+    "invoice_id": "HD000011",
+    "invoice_date": "2025-07-30",
+    "customer_id": "KH108215",
+    "product_id": "SP000002",
+    "product_name": "Thủ mì 2 500gr",
+    "quantity": 56,
+    "address": "0119 Olson Harbor Suite 023, South Austin, KY 75927",
+    "customer_name": "Thomas Park"
+  },
+  {
+    "id": 12,
+    "invoice_id": "HD000012",
+    "invoice_date": "2025-08-21",
+    "customer_id": "KH577065",
+    "product_id": "SP000017",
+    "product_name": "Dabao Đỏ 1 1ky",
+    "quantity": 97,
+    "address": "46540 Becker Via Apt. 032, Allenfort, OH 45563",
+    "customer_name": "Albert Ross"
+  },
+  {
+    "id": 13,
+    "invoice_id": "HD000013",
+    "invoice_date": "2025-07-26",
+    "customer_id": "KH672604",
+    "product_id": "SP000002",
+    "product_name": "Thủ mì 2 500gr",
+    "quantity": 66,
+    "address": "608 Brian Streets Apt. 780, North Andrewburgh, NY 06942",
+    "customer_name": "Patricia Taylor"
+  },
+  {
+    "id": 14,
+    "invoice_id": "HD000014",
+    "invoice_date": "2025-07-09",
+    "customer_id": "KH803210",
+    "product_id": "SP000017",
+    "product_name": "Dabao Đỏ 1 1ky",
+    "quantity": 88,
+    "address": "Unit 9007 Box 1306, DPO AE 93563",
+    "customer_name": "Justin Coleman"
+  },
+  {
+    "id": 15,
+    "invoice_id": "HD000015",
+    "invoice_date": "2025-07-18",
+    "customer_id": "KH789451",
+    "product_id": "SP000058",
+    "product_name": "XÚC XÍCH 500gr",
+    "quantity": 97,
+    "address": "4941 Darryl Track Apt. 162, Melvinport, NJ 04329",
+    "customer_name": "Roger Clark"
+  }
+]

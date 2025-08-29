@@ -52,7 +52,7 @@ const CardKPI = ({ cardDescription, cardTitle, cardAction, cardFooter, cardFoote
                             {cardFooterDescription}
                         </div>
                     </div>
-                    <Button variant='outline'>
+                    <Button variant='outline' className='cursor-pointer'>
                         <IconChevronRight />
                     </Button>
                 </CardFooter>
