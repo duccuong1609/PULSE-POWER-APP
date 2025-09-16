@@ -13,11 +13,11 @@
 ---
 
 ## ⚙️ Tech Stack
-- **Frontend**: React + TypeScript + Vite  
-- **Backend**: Node.js / Express (or FastAPI if using Python)  
+- **Frontend**: React, TS, VITE, shadcn UI
+- **Backend**: FastAPI  
 - **Machine Learning / Deep Learning**: PyTorch / TensorFlow, Surprise, Implicit  
 - **Database**: PostgreSQL / MySQL / MongoDB  
-- **Deployment**: Docker, Vercel/Netlify (Frontend), Render/Heroku (Backend)  
+- **Deployment**: Docker, Vercel/Netlify (Frontend), HuggingFace 
 
 ---
 

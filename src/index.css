@@ -6,7 +6,6 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -43,6 +42,14 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
+  --badge-background-up: oklch(96.2% 0.044 156.743);
+  --badge-foreground-up: oklch(44.8% 0.119 151.328);
+  --badge-background-down: oklch(93.6% 0.032 17.717);
+  --badge-foreground-down: oklch(44.4% 0.177 26.899);
+}
+
+html.dark > body > #root, html.dark > body {
+  background-color: var(--sidebar);
 }
 
 .suez-one-regular {
@@ -140,6 +147,10 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.552 0.016 285.938);
+  --badge-background-up: oklch(39.3% 0.095 152.535);
+  --badge-foreground-up: oklch(87.1% 0.15 154.449);
+  --badge-background-down: oklch(39.6% 0.141 25.723);
+  --badge-foreground-down: oklch(80.8% 0.114 19.571);
 }
 
 @layer base {
