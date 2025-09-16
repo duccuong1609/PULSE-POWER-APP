@@ -13,9 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { ThemeToggle } from "./theme-toggle"
 import { appRoutes } from "@/config/app-route"
-import LanguageSwitcher from "./language-switcher"
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -39,8 +37,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={appRoutes.navMain} />
         <NavDocuments items={appRoutes.documents} />
-        <ThemeToggle />
-        <LanguageSwitcher />
         <NavSecondary items={appRoutes.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
