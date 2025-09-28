@@ -1,14 +1,43 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useForm } from "react-hook-form";
+import { loginSchema, type LoginSchema } from "@/validate/loginSchema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import authService from "@/services/authService";
+import type { LOGIN_PROPS } from "@/services/dtos";
+import { CONST } from "@/config/const";
+import { useNavigate } from "react-router";
+import { Spinner } from "./ui/shadcn-io/spinner";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+  const {
+    register,
+    formState: { errors, isSubmitting },
+    handleSubmit,
+  } = useForm<LoginSchema>({
+    resolver: yupResolver(loginSchema),
+  });
+  const navigate = useNavigate();
+  const onSubmit = async (data: LoginSchema) => {
+    const response: LOGIN_PROPS = await authService.login(data);
+    if (response) {
+      localStorage.setItem(CONST.AXIOS.ACCESS_TOKEN, response.access_token);
+      localStorage.setItem(CONST.AXIOS.REFRESH_TOKEN, response.refresh_token);
+      navigate(`/${response.user.username}/dashboard`);
+    }
+  };
+
   return (
-    <form className={cn("flex flex-col gap-6", className)} {...props}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={cn("flex flex-col gap-6", className)}
+      {...props}
+    >
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-bold">Login to your account</h1>
         <p className="text-muted-foreground text-sm text-balance">
@@ -18,7 +47,17 @@ export function LoginForm({
       <div className="grid gap-6">
         <div className="grid gap-3">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="ndc@example.com" required />
+          <Input
+            {...register("email")}
+            id="email"
+            type="text"
+            placeholder="user@example.com"
+            tabIndex={1}
+            required
+          />
+          {errors.email && (
+            <p className="text-sm text-red-500">{errors.email.message}</p>
+          )}
         </div>
         <div className="grid gap-3">
           <div className="flex items-center">
@@ -26,14 +65,25 @@ export function LoginForm({
             <a
               href="#"
               className="ml-auto text-sm underline-offset-4 hover:underline"
+              tabIndex={0}
             >
               Forgot your password?
             </a>
           </div>
-          <Input id="password" type="password" required />
+          <Input
+            {...register("password")}
+            id="password"
+            type="password"
+            required
+            tabIndex={2}
+            placeholder="strongPassword123"
+          />
+          {errors.password && (
+            <p className="text-sm text-red-500">{errors.password.message}</p>
+          )}
         </div>
-        <Button type="submit" className="w-full">
-          Login
+        <Button tabIndex={3} type="submit" className="w-full">
+          {isSubmitting ? <Spinner variant="pinwheel" /> : "Login"}
         </Button>
         <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
           <span className="bg-background text-muted-foreground relative z-10 px-2">
@@ -57,5 +107,5 @@ export function LoginForm({
         </a>
       </div>
     </form>
-  )
+  );
 }

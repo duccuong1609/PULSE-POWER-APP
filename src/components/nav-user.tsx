@@ -3,13 +3,9 @@ import {
   IconLogout,
   IconNotification,
   IconUserCircle,
-} from "@tabler/icons-react"
+} from "@tabler/icons-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,26 +14,48 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
-import { useTranslation } from "react-i18next"
+} from "@/components/ui/sidebar";
+import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import userQueries from "@/app/queries/users.queries";
+import authService from "@/services/authService";
+import { useNavigate } from "react-router";
+import { useCallback } from "react";
+import { CONST } from "@/config/const";
+import queryClient from "@/lib/queryClient";
 
 export function NavUser({
   user,
 }: {
   user: {
-    name: string
-    email: string
-    avatar: string
-  }
+    name: string;
+    email: string;
+    avatar: string;
+  };
 }) {
-  const { isMobile } = useSidebar()
+  const { isMobile } = useSidebar();
   const { t } = useTranslation();
+  const { data: userInfo } = useQuery(
+    userQueries.currentUserQuery([], { enabled: false })
+  );
+  const navigate = useNavigate();
+
+  const handleLogout = useCallback(() => {
+    if (userInfo) {
+      authService.logout(userInfo.id).then(() => {
+        localStorage.removeItem(CONST.AXIOS.ACCESS_TOKEN);
+        localStorage.removeItem(CONST.AXIOS.REFRESH_TOKEN);
+        queryClient.removeQueries({ queryKey: ['current-user'] });
+        navigate("/login");
+      });
+    }
+  }, [userInfo]);
 
   return (
     <SidebarMenu>
@@ -53,9 +71,11 @@ export function NavUser({
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
+                <span className="truncate font-medium">
+                  {userInfo?.username}
+                </span>
                 <span className="text-muted-foreground truncate text-xs">
-                  {user.email}
+                  {userInfo?.email}
                 </span>
               </div>
               <IconDotsVertical className="ml-auto size-4" />
@@ -70,13 +90,15 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarImage src={user.avatar} alt={userInfo?.username} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
+                  <span className="truncate font-medium">
+                    {userInfo?.username}
+                  </span>
                   <span className="text-muted-foreground truncate text-xs">
-                    {user.email}
+                    {userInfo?.email}
                   </span>
                 </div>
               </div>
@@ -93,7 +115,12 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive">
+            <DropdownMenuItem
+              variant="destructive"
+              onClick={() => {
+                handleLogout();
+              }}
+            >
               <IconLogout />
               {t("logout")}
             </DropdownMenuItem>
@@ -101,5 +128,5 @@ export function NavUser({
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }
