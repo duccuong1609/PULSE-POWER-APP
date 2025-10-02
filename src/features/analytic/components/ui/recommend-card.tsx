@@ -1,9 +1,17 @@
-import { Card, CardContent, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardTitle,
+} from "@/components/ui/card";
 import { ChartRadarLinesOnly } from "./radar-chart";
+import { Loading } from "@/components/loading";
 
 const RecommendCard = () => {
   return (
-    <Card className="h-fit">
+    <Card className="h-fit overflow-hidden relative">
+      <Loading show variant="absolute" />
       <CardContent>
         <div className="flex flex-wrap justify-center">
           <ChartRadarLinesOnly />

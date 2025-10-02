@@ -22,3 +22,21 @@ export interface REFRESH_PROPS {
     access_token: string;
     duration: number;
 }
+
+export interface PRODUCT_PROPS {
+    id: number,
+    referanceId: string,
+    name: string,
+    description: string,
+    imgUrl: string,
+    price: string,
+}
+
+export interface CUSTOMER_PROPS {
+    id: number,
+    referanceId: string,
+    name: string,
+    description: string,
+    imgUrl: string,
+    price: string,
+}

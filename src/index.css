@@ -1,3 +1,8 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./style/scrollbar.css";
+@import "./style/animation.css";
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -52,6 +57,10 @@ html.dark > body > #root, html.dark > body {
   background-color: var(--sidebar);
 }
 
+html.dark {
+  height: 100vh;
+}
+
 .suez-one-regular {
   font-family: "Suez One", serif;
   font-weight: 400;
@@ -70,10 +79,6 @@ html.dark > body > #root, html.dark > body {
     background-color: #f9f9f9;
   }
 }
-
-@import "tailwindcss";
-
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 

@@ -1,3 +1,4 @@
+import { Loading } from "@/components/loading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -5,68 +6,140 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import type { CUSTOMER_PROPS, PRODUCT_PROPS } from "@/services/dtos";
+import { ChevronLeftIcon } from "lucide-react";
+import { useMemo, useState } from "react";
 import { FaFireAlt } from "react-icons/fa";
 import { TbCirclesRelation } from "react-icons/tb";
+import { useNavigate } from "react-router";
+import { useDebounce } from "use-debounce";
+import Fuse from "fuse.js";
+import { FaFaceFrownOpen } from "react-icons/fa6";
+import { useTypedStore } from "@/helper/use-typed-stored";
 
-const data = [
-  { name: "Trending Product", image: "/img/product-template-img.webp" },
-  { name: "Trending Product", image: "/img/product-template-img.webp" },
-  { name: "Trending Product", image: "/img/product-template-img.webp" },
-];
+type AnalyticSearchProps =
+  | {
+      type: "product";
+      data?: PRODUCT_PROPS[];
+      isLoading?: boolean;
+    }
+  | {
+      type: "customer";
+      data?: CUSTOMER_PROPS[];
+      isLoading?: boolean;
+    };
 
-const AnalyticSearch = () => {
+const AnalyticSearch = ({
+  type,
+  data = [],
+  isLoading = false,
+}: AnalyticSearchProps) => {
+  
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+  const [debouncedQuery] = useDebounce(query, 500);
+  const { setValue } = useTypedStore(type);
+
+  const fuse = useMemo(() => {
+    return new Fuse(data, {
+      keys: ["name"],
+      threshold: 0.4,
+    });
+  }, [data]);
+
+  const results = useMemo(() => {
+    if (!debouncedQuery) return data;
+    return fuse.search(debouncedQuery).map((r) => r.item);
+  }, [debouncedQuery, fuse, data]);
+
+  const handleChoose = (item: PRODUCT_PROPS | CUSTOMER_PROPS) => {
+    setOpen(false);
+    setValue(item);
+    setQuery(item.name);
+  };
+
   return (
     <>
-      <Popover>
-        <PopoverTrigger>
-          <Input type="search" placeholder="Hotdog, etc..." />
-        </PopoverTrigger>
-        <PopoverContent className="w-[var(--radix-popover-trigger-width)] flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <span className="text-muted-foreground text-xs mb-2 flex gap-1 items-center">
-              Suggestions
-              <FaFireAlt className="text-[var(--badge-foreground-down)]" />
-            </span>
-            {data.map((item) => (
-              <Button
-                variant={"outline"}
-                key={item.name}
-                className="flex justify-start gap-2 cursor-pointer"
-              >
-                <img
-                  className="h-[100%] aspect-square rounded-xl border hover:brightness-110 transition-all duration-300 ease-in-out"
-                  src={item.image}
-                  alt="Trending Product"
-                  fetchPriority="high"
-                  loading="eager"
-                />
-                <span>{item.name}</span>
-              </Button>
-            ))}
-          </div>
-          <div className="flex flex-col gap-2">
-            <span className="text-muted-foreground text-xs mb-2 flex gap-1 items-center">Related
-              <TbCirclesRelation className="text-[var(--badge-foreground-up)]" />
-            </span>
-            {data.map((item) => (
-              <Button
-                variant={"outline"}
-                key={item.name}
-                className="flex justify-start gap-2 cursor-pointer"
-              >
-                <img
-                  className="h-[100%] aspect-square rounded-xl border hover:brightness-110 transition-all duration-300 ease-in-out"
-                  src={item.image}
-                  alt="Trending Product"
-                  fetchPriority="high"
-                  loading="eager"
-                />
-                <span>{item.name}</span>
-              </Button>
-            ))}
-          </div>
-        </PopoverContent>
-      </Popover>
+      <div className="flex gap-2">
+        <Button onClick={() => navigate(-1)} variant={"outline"}>
+          <ChevronLeftIcon className="size-4" />
+        </Button>
+        <div className="flex-1 flex">
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Input
+                type="search"
+                value={query}
+                onChange={(e) => {setQuery(e.target.value)}}
+                placeholder="Hotdog, etc..."
+                onFocus={(e) => {
+                  setOpen(true);
+                  const length = e.target.value.length;
+                  e.target.setSelectionRange(length, length);
+                }}
+                onBlur={() => setOpen(false)}
+              />
+            </PopoverTrigger>
+            <PopoverContent className="w-[var(--radix-popover-trigger-width)] mt-2 h-96 overflow-y-auto flex flex-col gap-4 custom-scrollbar relative transform transition-all duration-300 ease-in-out">
+              <Loading show={data.length === 0 || isLoading} />
+              <div className="flex flex-col gap-2">
+                <span className="text-muted-foreground text-sm mb-2 flex gap-1 items-center">
+                  Related
+                  <TbCirclesRelation className="text-[var(--badge-foreground-up)]" />
+                </span>
+                {results.length > 0 ? (
+                  results.map((item) => (
+                    <Button
+                      variant={"outline"}
+                      key={item.id}
+                      onClick={() => handleChoose(item)}
+                      className="flex justify-start gap-2 cursor-pointer"
+                    >
+                      <img
+                        className="h-[100%] aspect-square rounded-xl border hover:brightness-110 transition-all duration-300 ease-in-out"
+                        src={item.imgUrl || "/img/product-template-img.webp"}
+                        alt="Trending Product"
+                        fetchPriority="high"
+                        loading="eager"
+                      />
+                      <span>{item.name}</span>
+                    </Button>
+                  ))
+                ) : (
+                  <span className="text-muted-foreground text-sm items-center justify-center italic flex gap-2">
+                    No results found
+                    <FaFaceFrownOpen />
+                  </span>
+                )}
+              </div>
+              <div className="flex flex-col gap-2">
+                <span className="text-muted-foreground text-sm mb-2 flex gap-1 items-center">
+                  Suggestions
+                  <FaFireAlt className="text-[var(--badge-foreground-down)]" />
+                </span>
+                {data.slice(0, 3).map((item) => (
+                  <Button
+                    variant={"outline"}
+                    key={item.id}
+                    onClick={() => handleChoose(item)}
+                    className="flex justify-start gap-2 cursor-pointer"
+                  >
+                    <img
+                      className="h-[100%] aspect-square rounded-xl border hover:brightness-110 transition-all duration-300 ease-in-out"
+                      src={item.imgUrl || "/img/product-template-img.webp"}
+                      alt="Trending Product"
+                      fetchPriority="high"
+                      loading="eager"
+                    />
+                    <span>{item.name}</span>
+                  </Button>
+                ))}
+              </div>
+            </PopoverContent>
+          </Popover>
+        </div>
+      </div>
       <span className="text-muted-foreground text-sm text-left">
         Browsing your product for analytic
       </span>

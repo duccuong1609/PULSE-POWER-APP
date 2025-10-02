@@ -13,6 +13,9 @@ import { useState } from "react";
 import AnimationButton from "@/components/animation-button";
 import GlareHover from "@/features/dashboard/components/ui/glare-hover";
 import { glareHoverConfig } from "@/config/glare-hover-config";
+import { useProductStore } from "@/store/productStore";
+import { Loading } from "@/components/loading";
+import { Spinner } from "@/components/ui/shadcn-io/spinner";
 
 const ProductAnalyticCard = () => {
   const [saved, setSaved] = useState(false);
@@ -21,16 +24,28 @@ const ProductAnalyticCard = () => {
     setSaved((prev) => !prev);
   };
 
+  const { product } = useProductStore();
+
   return (
-    <Card className="h-fit relative">
+    <Card className="h-fit relative overflow-hidden">
+      <Loading
+        show={!product}
+        variant="absolute"
+        children={
+          <div className="flex flex-col gap-4 flex-wrap justify-center items-center relative">
+            <Spinner variant="ellipsis" size={50} />
+            <div className="text-muted-foreground text-sm">
+              Working on... Searching something to analytic
+            </div>
+          </div>
+        }
+      />
       <CardContent>
-        <div className="flex gap-4 flex-wrap justify-center">
-          <GlareHover
-            {...glareHoverConfig}
-          >
+        <div className="flex gap-4 flex-wrap justify-center relative">
+          <GlareHover {...glareHoverConfig}>
             <img
               className="max-w-64 self-start min-w-64 w-full aspect-square rounded-xl border hover:brightness-110 transition-all duration-300 ease-in-out"
-              src="/img/product-template-img.webp"
+              src={product?.imgUrl || "/img/product-template-img.webp"}
               alt="Trending Product"
               fetchPriority="high"
               loading="eager"
@@ -38,9 +53,11 @@ const ProductAnalyticCard = () => {
           </GlareHover>
           <div className="flex flex-col gap-4 grow">
             <CardTitle className="text-2xl font-semibold text-left tabular-nums @[250px]/card:text-3xl">
-              Title
+              {product?.name}
             </CardTitle>
-            <CardDescription className="text-left">Description</CardDescription>
+            <CardDescription className="text-left">
+              {product?.description || "Description"}
+            </CardDescription>
             <div className="flex gap-2">
               <CardAction>
                 <Badge

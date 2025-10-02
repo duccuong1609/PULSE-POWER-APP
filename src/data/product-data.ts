@@ -1,5 +1,6 @@
 export const data = [
   {
+    id: 1,
     title: "Trending Product",
     description: "Description",
     image: "/img/product-template-img.webp",
@@ -7,6 +8,7 @@ export const data = [
     href: "#",
   },
   {
+    id: 2,
     title: "Trending Product",
     description: "Description",
     image: "/img/product-template-img.webp",
@@ -14,6 +16,7 @@ export const data = [
     href: "#",
   },
   {
+    id: 3,
     title: "Trending Product",
     description: "Description",
     image: "/img/product-template-img.webp",
@@ -21,6 +24,7 @@ export const data = [
     href: "#",
   },
   {
+    id: 4,
     title: "Trending Product",
     description: "Description",
     image: "/img/product-template-img.webp",
@@ -28,6 +32,7 @@ export const data = [
     href: "#",
   },
   {
+    id: 5,
     title: "Trending Product",
     description: "Description",
     image: "/img/product-template-img.webp",
