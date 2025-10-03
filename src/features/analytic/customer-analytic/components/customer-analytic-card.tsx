@@ -8,14 +8,14 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { IconTrendingUp } from "@tabler/icons-react";
+import { IconTrendingUp, IconUser } from "@tabler/icons-react";
 import { useState } from "react";
 import AnimationButton from "@/components/animation-button";
 import GlareHover from "@/features/dashboard/components/ui/glare-hover";
 import { glareHoverConfig } from "@/config/glare-hover-config";
 import { Loading } from "@/components/loading";
-import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import { useCustomerStore } from "@/store/customerStore";
+import { Spinner } from "@/components/ui/shadcn-io/spinner";
 
 const CustomerAnalyticCard = () => {
   const [saved, setSaved] = useState(false);
@@ -45,7 +45,10 @@ const CustomerAnalyticCard = () => {
           <GlareHover {...glareHoverConfig}>
             <img
               className="max-w-64 self-start min-w-64 w-full aspect-square rounded-xl border hover:brightness-110 transition-all duration-300 ease-in-out"
-              src={customer?.imgUrl || "/img/product-template-img.webp"}
+              src={
+                customer?.imgUrl ||
+                "/img/product-template-img.webp"
+              }
               alt="Trending Product"
               fetchPriority="high"
               loading="eager"
@@ -64,8 +67,8 @@ const CustomerAnalyticCard = () => {
                   variant="outline"
                   className={` text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md`}
                 >
-                  <IconTrendingUp />
-                  Badge
+                  <IconUser />
+                  {customer?.referanceId}
                 </Badge>
               </CardAction>
               <CardAction>

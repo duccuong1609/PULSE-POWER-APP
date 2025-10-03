@@ -1,3 +1,16 @@
+export interface ERROR_CONTAINER_PROPS {
+    statusCode: number;
+    timestamp: Date;
+    path: string;
+    message: ERROR_PROPS;
+}
+
+export interface ERROR_PROPS {
+    status: number;
+    message: string;
+    details: string;
+}
+
 export interface LOGIN_DTO {
     email: string;
     password: string;
@@ -27,16 +40,32 @@ export interface PRODUCT_PROPS {
     id: number,
     referanceId: string,
     name: string,
-    description: string,
-    imgUrl: string,
-    price: string,
+    description?: string,
+    imgUrl?: string,
+    price?: string,
 }
 
 export interface CUSTOMER_PROPS {
     id: number,
     referanceId: string,
     name: string,
-    description: string,
-    imgUrl: string,
-    price: string,
+    imgUrl?: string,
+    description?: string,
+    price?: string,
+}
+
+export interface RECOMMEND_DTO {
+    user_id: string,
+    top_k: number,
+}
+
+export interface RECOMMEND_ITEM_PROPS {
+    MaHang: string,
+    Score: number,
+    Rank: number
+}
+
+export interface RECOMMEND_PROPS {
+    user_id: string,
+    recommendations: RECOMMEND_ITEM_PROPS[],
 }

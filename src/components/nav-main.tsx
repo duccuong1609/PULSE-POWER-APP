@@ -9,6 +9,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Link } from "react-router";
+import { useUserStore } from "@/store/userStore";
 
 export function NavMain({
   items,
@@ -19,6 +20,7 @@ export function NavMain({
     icon?: Icon;
   }[];
 }) {
+  const { userParam } = useUserStore();
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
@@ -46,7 +48,7 @@ export function NavMain({
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <Link to={item.url}>
+              <Link to={`/${userParam}${item.url}`}>
                 <SidebarMenuButton tooltip={item.title}>
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
