@@ -18,7 +18,6 @@ import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import { Card } from "@/components/ui/card";
 
 const RelatedSection = () => {
-  
   const { customer } = useCustomerStore();
 
   const productQuery = useQuery(productQueries.getProductListQuery());
@@ -39,13 +38,17 @@ const RelatedSection = () => {
   const recommendedProducts = React.useMemo(() => {
     if (!productQuery.data || !topKProductQuery.data) return [];
 
-    const recommendMaHangSet = new Set(
-      topKProductQuery.data.recommendations.map((r) => r.MaHang)
+    const recommendMap = new Map(
+      topKProductQuery.data.recommendations.map((r) => [r.MaHang, r.Rank])
     );
 
-    return productQuery.data.filter((p: PRODUCT_PROPS) =>
-      recommendMaHangSet.has(p.referanceId)
-    );
+    return productQuery.data
+      .filter((p: PRODUCT_PROPS) => recommendMap.has(p.referanceId))
+      .map((p) => ({
+        ...p,
+        rank: recommendMap.get(p.referanceId) ?? 0,
+      }))
+      .sort((a, b) => b.rank - a.rank);
   }, [productQuery.data, topKProductQuery.data]);
 
   return (
@@ -75,6 +78,7 @@ const RelatedSection = () => {
                       className="h-full"
                       title={item.name}
                       description={item.name}
+                      rank={item.rank}
                       image={item.imgUrl || "img/product-template-img.webp"}
                     />
                   </CarouselItem>

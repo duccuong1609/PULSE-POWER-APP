@@ -8,16 +8,14 @@ import {
 } from "@/components/ui/popover";
 import type { CUSTOMER_PROPS, PRODUCT_PROPS } from "@/services/dtos";
 import { ChevronLeftIcon } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
 import { FaFireAlt } from "react-icons/fa";
 import { TbCirclesRelation } from "react-icons/tb";
-import { useNavigate, useSearchParams } from "react-router";
-import { useDebounce } from "use-debounce";
-import Fuse from "fuse.js";
+import { useNavigate } from "react-router";
 import { FaFaceFrownOpen } from "react-icons/fa6";
 import { useTypedStore } from "@/helper/use-typed-stored";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUserStore } from "@/store/userStore";
+import { useSearch } from "../../customer-analytic/hooks/useSearch";
 
 type AnalyticSearchProps =
   | {
@@ -36,47 +34,11 @@ const AnalyticSearch = ({
   data = [],
   isLoading = false,
 }: AnalyticSearchProps) => {
-  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const [query, setQuery] = useState("");
-  const [debouncedQuery] = useDebounce(query, 500);
   const { setValue } = useTypedStore(type);
-
-  const fuse = useMemo(() => {
-    return new Fuse(data, {
-      keys: ["referanceId", "name"],
-      threshold: 0.4,
-    });
-  }, [data]);
-
-  const results = useMemo(() => {
-    if (!debouncedQuery) return data;
-    return fuse.search(debouncedQuery).map((r) => r.item);
-  }, [debouncedQuery, fuse, data]);
-
-  const handleChoose = (item: PRODUCT_PROPS | CUSTOMER_PROPS) => {
-    setOpen(false);
-    setValue(item);
-    setQuery(item.name);
-  };
-
-  const [searchParams] = useSearchParams();
+  const { query, setQuery, results, handleChoose, displayedResults } =
+    useSearch(data, setValue);
   const { userParam } = useUserStore();
-
-  useEffect(() => {
-    const referanceId = searchParams.get("referanceId");
-    if (referanceId) {
-      setQuery(referanceId);
-
-      const item = data.find(
-        (d: PRODUCT_PROPS | CUSTOMER_PROPS) => d.referanceId === referanceId
-      );
-
-      if (item) {
-        handleChoose(item);
-      }
-    }
-  }, [searchParams, data]);
 
   return (
     <>
@@ -88,36 +50,38 @@ const AnalyticSearch = ({
           <ChevronLeftIcon className="size-4" />
         </Button>
         <div className="flex-1 flex">
-          <Popover open={open} onOpenChange={setOpen}>
+          <Popover>
             <PopoverTrigger asChild>
-              <Input
-                type="search"
-                value={query}
-                onChange={(e) => {
-                  setQuery(e.target.value);
-                }}
-                placeholder="Hotdog, etc..."
-                onFocus={(e) => {
-                  setOpen(true);
-                  const length = e.target.value.length;
-                  e.target.setSelectionRange(length, length);
-                }}
-                onBlur={() => setOpen(false)}
-              />
+              <Input type="search" placeholder="Hotdog, etc..." value={query} />
             </PopoverTrigger>
             <PopoverContent className="w-[var(--radix-popover-trigger-width)] mt-2 h-96 overflow-y-auto flex flex-col gap-4 custom-scrollbar relative transform transition-all duration-300 ease-in-out">
               <Loading show={data.length === 0 || isLoading} />
               <div className="flex flex-col gap-2">
+                <Input
+                  type="search"
+                  value={query}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                  }}
+                  placeholder="Hotdog, etc..."
+                  onFocus={(e) => {
+                    const length = e.target.value.length;
+                    e.target.setSelectionRange(length, length);
+                  }}
+                />
                 <span className="text-muted-foreground text-sm mb-2 flex gap-1 items-center">
                   Related
                   <TbCirclesRelation className="text-[var(--badge-foreground-up)]" />
                 </span>
                 {results.length > 0 ? (
-                  results.slice(0, 100).map((item) => (
+                  displayedResults.slice(0, 100).map((item) => (
                     <Button
                       variant={"outline"}
                       key={item.id}
-                      onClick={() => handleChoose(item)}
+                      onClick={() => {
+                        handleChoose(item);
+                        navigate(`?referanceId=${item.referanceId}`);
+                      }}
                       className="flex justify-start gap-2 cursor-pointer"
                     >
                       <Avatar className="w-5 h-5">
@@ -151,7 +115,10 @@ const AnalyticSearch = ({
                   <Button
                     variant={"outline"}
                     key={item.id}
-                    onClick={() => handleChoose(item)}
+                    onClick={() => {
+                      handleChoose(item);
+                      navigate(`?referanceId=${item.referanceId}`);
+                    }}
                     className="flex justify-start gap-2 cursor-pointer"
                   >
                     <img
