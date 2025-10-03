@@ -11,8 +11,9 @@ import {
 import { glareHoverConfig } from "@/config/glare-hover-config";
 import GlareHover from "@/features/dashboard/components/ui/glare-hover";
 import { useUserStore } from "@/store/userStore";
-import { IconTrendingUp } from "@tabler/icons-react";
 import { useNavigate } from "react-router";
+import { AiFillProduct } from "react-icons/ai";
+import { FaMedal } from "react-icons/fa";
 
 type ItemProps = {
   title: string;
@@ -20,9 +21,11 @@ type ItemProps = {
   image: string;
   badge: string;
   className?: string;
+  rank?: number;
 };
 
 const ProductCard = (item: ItemProps) => {
+  
   const { userParam } = useUserStore();
   const navigate = useNavigate();
 
@@ -61,19 +64,27 @@ const ProductCard = (item: ItemProps) => {
                 variant="outline"
                 className={` text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md`}
               >
-                <IconTrendingUp />
+                <AiFillProduct />
                 {item.badge}
               </Badge>
             </CardAction>
-            <CardAction>
-              <Badge
-                variant="outline"
-                className={` text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md`}
-              >
-                <IconTrendingUp />
-                Action
-              </Badge>
-            </CardAction>
+            {item.rank && item.rank < 4 && (
+              <CardAction>
+                <Badge
+                  variant="outline"
+                  className={`${
+                    item.rank == 1
+                      ? "text-[#AF9500]"
+                      : item.rank == 2
+                      ? "text-[#D7D7D7]"
+                      : "text-[#AD8A56]"
+                  } text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md`}
+                >
+                  <FaMedal />
+                  {item.rank}
+                </Badge>
+              </CardAction>
+            )}
           </CardFooter>
         </Card>
       </GlareHover>
