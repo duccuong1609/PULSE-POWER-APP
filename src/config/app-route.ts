@@ -21,12 +21,12 @@ export const appRoutes = {
   navMain: [
     {
       title: "Dashboard",
-      url: "/user/dashboard",
+      url: "/dashboard",
       icon: IconDashboard,
     },
     {
       title: "Analytics",
-      url: "/user/analytic",
+      url: "/analytic",
       icon: IconChartBar,
     },
   ],
@@ -81,12 +81,12 @@ export const appRoutes = {
   navSecondary: [
     {
       title: "Settings",
-      url: "/user/setting",
+      url: "/setting",
       icon: IconSettings,
     },
     {
       title: "Get Help",
-      url: "/user/info",
+      url: "/info",
       icon: IconHelp,
     },
     {

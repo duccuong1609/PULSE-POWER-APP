@@ -1,7 +1,7 @@
 import { SiteHeader } from "@/components/site-header";
 import RelatedSection from "@/features/analytic/components/related";
 import { IoIosAnalytics } from "react-icons/io";
-import RecommendCard from "@/features/analytic/components/ui/recommend-card";
+import RecommendCard from "@/features/analytic/product-analytic/components/product-recommend-card";
 import ProductAnalyticCard from "@/features/analytic/product-analytic/components/product-analytic-card";
 import TrendingSection from "@/features/analytic/components/trending";
 import ProductAnalyticSearching from "@/features/analytic/product-analytic/components/product-analytic-searching";

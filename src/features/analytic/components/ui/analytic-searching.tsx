@@ -8,14 +8,16 @@ import {
 } from "@/components/ui/popover";
 import type { CUSTOMER_PROPS, PRODUCT_PROPS } from "@/services/dtos";
 import { ChevronLeftIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FaFireAlt } from "react-icons/fa";
 import { TbCirclesRelation } from "react-icons/tb";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { useDebounce } from "use-debounce";
 import Fuse from "fuse.js";
 import { FaFaceFrownOpen } from "react-icons/fa6";
 import { useTypedStore } from "@/helper/use-typed-stored";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useUserStore } from "@/store/userStore";
 
 type AnalyticSearchProps =
   | {
@@ -34,7 +36,6 @@ const AnalyticSearch = ({
   data = [],
   isLoading = false,
 }: AnalyticSearchProps) => {
-  
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
@@ -43,7 +44,7 @@ const AnalyticSearch = ({
 
   const fuse = useMemo(() => {
     return new Fuse(data, {
-      keys: ["name"],
+      keys: ["referanceId", "name"],
       threshold: 0.4,
     });
   }, [data]);
@@ -59,10 +60,31 @@ const AnalyticSearch = ({
     setQuery(item.name);
   };
 
+  const [searchParams] = useSearchParams();
+  const { userParam } = useUserStore();
+
+  useEffect(() => {
+    const referanceId = searchParams.get("referanceId");
+    if (referanceId) {
+      setQuery(referanceId);
+
+      const item = data.find(
+        (d: PRODUCT_PROPS | CUSTOMER_PROPS) => d.referanceId === referanceId
+      );
+
+      if (item) {
+        handleChoose(item);
+      }
+    }
+  }, [searchParams, data]);
+
   return (
     <>
       <div className="flex gap-2">
-        <Button onClick={() => navigate(-1)} variant={"outline"}>
+        <Button
+          onClick={() => navigate(`/${userParam}/analytic`)}
+          variant={"outline"}
+        >
           <ChevronLeftIcon className="size-4" />
         </Button>
         <div className="flex-1 flex">
@@ -71,7 +93,9 @@ const AnalyticSearch = ({
               <Input
                 type="search"
                 value={query}
-                onChange={(e) => {setQuery(e.target.value)}}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                }}
                 placeholder="Hotdog, etc..."
                 onFocus={(e) => {
                   setOpen(true);
@@ -89,21 +113,26 @@ const AnalyticSearch = ({
                   <TbCirclesRelation className="text-[var(--badge-foreground-up)]" />
                 </span>
                 {results.length > 0 ? (
-                  results.map((item) => (
+                  results.slice(0, 100).map((item) => (
                     <Button
                       variant={"outline"}
                       key={item.id}
                       onClick={() => handleChoose(item)}
                       className="flex justify-start gap-2 cursor-pointer"
                     >
-                      <img
-                        className="h-[100%] aspect-square rounded-xl border hover:brightness-110 transition-all duration-300 ease-in-out"
-                        src={item.imgUrl || "/img/product-template-img.webp"}
-                        alt="Trending Product"
-                        fetchPriority="high"
-                        loading="eager"
-                      />
-                      <span>{item.name}</span>
+                      <Avatar className="w-5 h-5">
+                        <AvatarImage
+                          src={item.imgUrl || "https://github.com/shadcn.png"}
+                        />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>
+                      <span>
+                        {item.name}
+                        <span className="text-muted-foreground">
+                          {" "}
+                          - {item.referanceId}
+                        </span>
+                      </span>
                     </Button>
                   ))
                 ) : (
@@ -141,7 +170,7 @@ const AnalyticSearch = ({
         </div>
       </div>
       <span className="text-muted-foreground text-sm text-left">
-        Browsing your product for analytic
+        Browsing your customer for analytic
       </span>
     </>
   );

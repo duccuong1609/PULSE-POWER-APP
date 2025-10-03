@@ -7,7 +7,7 @@ const getProductListQuery = (extraKey: string[] = [], options?: Omit<Parameters<
   queryOptions<PRODUCT_PROPS[]>({
     queryKey: ['list-product', ...extraKey],
     queryFn: () => productService.getListProduct(),
-    staleTime: 0,
+    staleTime: 5000,
     ...options,
   })
 

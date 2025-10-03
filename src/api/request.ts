@@ -1,3 +1,4 @@
+import type { AxiosError } from "axios";
 import { protectedInstance, publicInstance } from "./axiosInstance";
 
 type RequestProps<T> = {
@@ -22,12 +23,20 @@ export async function request<T, V>({
     } else {
         headers["Content-Type"] = "application/json";
     }
-    const response = await instance({
+
+    try {
+        const response = await instance({
         url,
         method,
         data: body,
         params,
         headers
     });
-  return response.data as V;
+        return response.data as V;
+    } 
+    catch (err) {
+        const axiosErr = err as AxiosError;
+        throw axiosErr;
+  }
+    
 }

@@ -5,7 +5,7 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card";
-import { ChartRadarLinesOnly } from "./radar-chart";
+import { ChartRadarLinesOnly } from "../../components/ui/radar-chart";
 import { Loading } from "@/components/loading";
 
 const RecommendCard = () => {
@@ -14,7 +14,7 @@ const RecommendCard = () => {
       <Loading show variant="absolute" />
       <CardContent>
         <div className="flex flex-wrap justify-center">
-          <ChartRadarLinesOnly />
+          <ChartRadarLinesOnly chartData={[]} />
           <div className="flex flex-col grow gap-4">
             <CardTitle className="text-xl font-semibold text-left tabular-nums @[250px]/card:text-3xl">
               Analytic Recommend
@@ -22,7 +22,11 @@ const RecommendCard = () => {
             <Card className="h-full">
               <CardContent>
                 <CardDescription className="text-left">
-                  Recommend...
+                  <div className="flex justify-between font-bold pb-4">
+                    <span>MaHang</span>
+                    <span>Score</span>
+                    <span>Rank</span>
+                  </div>
                 </CardDescription>
               </CardContent>
             </Card>

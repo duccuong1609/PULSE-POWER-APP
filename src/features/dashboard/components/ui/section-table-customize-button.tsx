@@ -44,9 +44,9 @@ const SectionTableCustomizeButton = <T extends RowData>({table}: SectionTableCus
                             })}
                     </DropdownMenuContent>
                 </DropdownMenu>
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" className='sr-only'>
                     <IconPlus />
-                    <span className="hidden lg:inline">Add Section</span>
+                    <span className="hidden sr-only lg:inline">Add Section</span>
                 </Button>
             </div>
         </>

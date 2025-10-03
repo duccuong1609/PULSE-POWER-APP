@@ -1,10 +1,10 @@
 import { SiteHeader } from "@/components/site-header";
-import RelatedSection from "@/features/analytic/components/related";
 import { IoIosAnalytics } from "react-icons/io";
-import RecommendCard from "@/features/analytic/components/ui/recommend-card";
 import TrendingSection from "@/features/analytic/components/trending";
 import CustomerAnalyticSearching from "@/features/analytic/customer-analytic/components/customer-analytic-searching";
 import CustomerAnalyticCard from "@/features/analytic/customer-analytic/components/customer-analytic-card";
+import CustomerRecommendCard from "@/features/analytic/customer-analytic/components/customer-recommend-card";
+import RelatedSection from "@/features/analytic/customer-analytic/components/related-product";
 
 const AnalyticCustomer = () => {
   return (
@@ -22,7 +22,7 @@ const AnalyticCustomer = () => {
             </h2>
             <div className="flex flex-col gap-4">
               <CustomerAnalyticCard />
-              <RecommendCard />
+              <CustomerRecommendCard />
             </div>
           </section>
           <RelatedSection />

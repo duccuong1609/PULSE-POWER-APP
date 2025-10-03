@@ -1,22 +1,37 @@
 import { IconTrendingUp } from "@tabler/icons-react";
 import ProductCard from "../ui/product-card";
 import Loop from "@/features/dashboard/components/ui/loop";
-import { data } from "@/data/product-data";
 import { Loading } from "@/components/loading";
+import { useQuery } from "@tanstack/react-query";
+import productQueries from "@/app/queries/product.queries";
+import { useMemo } from "react";
 
-interface TechLogo {
+interface ProductItem {
   node: React.ReactNode;
   title: string;
-  href: string;
 }
 
-const techLogos: TechLogo[] = data.map((item) => ({
-  node: <ProductCard {...item} />,
-  title: item.title,
-  href: item.href,
-}));
-
 const TrendingSection = () => {
+  const { data } = useQuery(productQueries.getProductListQuery());
+
+  const productItem: ProductItem[] = useMemo(() => {
+    if (!data) return [];
+    return (
+      data.slice(0, 10).map((item) => ({
+        node: (
+          <ProductCard
+            badge={item.referanceId}
+            className="h-full"
+            title={item.name}
+            description={item.name}
+            image={item.imgUrl || "img/product-template-img.webp"}
+          />
+        ),
+        title: item.name,
+      })) ?? []
+    );
+  }, [data]);
+
   return (
     <>
       <section>
@@ -25,9 +40,9 @@ const TrendingSection = () => {
           <IconTrendingUp className="text-[var(--badge-foreground-up)]" />
         </h2>
         <div className="relative">
-          <Loading show variant="absolute" />
+          <Loading show={false} variant="absolute" />
           <Loop
-            logos={techLogos}
+            logos={productItem}
             speed={60}
             direction="left"
             logoHeight={48}

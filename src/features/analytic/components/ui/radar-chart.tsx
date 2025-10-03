@@ -1,30 +1,35 @@
-"use client"
+"use client";
 
-import { TrendingUp } from "lucide-react"
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
+import { TrendingUp } from "lucide-react";
+import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card"
+import { CardContent, CardFooter } from "@/components/ui/card";
 import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 
-export const description = "A radar chart with lines only"
+export const description = "A radar chart with lines only";
 
-const chartData = [
-  { month: "January", desktop: 186, mobile: 160 },
-  { month: "February", desktop: 185, mobile: 170 },
-  { month: "March", desktop: 207, mobile: 180 },
-  { month: "April", desktop: 173, mobile: 160 },
-  { month: "May", desktop: 160, mobile: 190 },
-  { month: "June", desktop: 174, mobile: 204 },
-]
+// const chartData = [
+//   { month: "January", desktop: 186, mobile: 160 },
+//   { month: "February", desktop: 185, mobile: 170 },
+//   { month: "March", desktop: 207, mobile: 180 },
+//   { month: "April", desktop: 173, mobile: 160 },
+//   { month: "May", desktop: 160, mobile: 190 },
+//   { month: "June", desktop: 174, mobile: 204 },
+// ];
+
+type ChartDataProps = {
+  label: string;
+  value: number;
+};
+
+type CharRadarLinesOnlyProps = {
+  chartData: ChartDataProps[];
+};
 
 const chartConfig = {
   desktop: {
@@ -35,43 +40,43 @@ const chartConfig = {
     label: "Mobile",
     color: "var(--chart-2)",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
-export function ChartRadarLinesOnly() {
+export function ChartRadarLinesOnly({ chartData }: CharRadarLinesOnlyProps) {
   return (
-    <Card className="border-transparent">
+    <div className="self-center">
       {/* <CardHeader className="items-center pb-4">
         <CardTitle>Radar Chart - Lines Only</CardTitle>
         <CardDescription>
           Showing total visitors for the last 6 months
         </CardDescription>
       </CardHeader> */}
-      <CardContent className="pb-0">
+      <CardContent className="p-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto aspect-[4/3] max-w-lg px-8"
         >
           <RadarChart data={chartData}>
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="line" />}
             />
-            <PolarAngleAxis dataKey="month" />
+            <PolarAngleAxis dataKey="label" />
             <PolarGrid radialLines={false} />
             <Radar
-              dataKey="desktop"
+              dataKey="value"
               fill="var(--color-desktop)"
               fillOpacity={0}
               stroke="var(--color-desktop)"
               strokeWidth={2}
             />
-            <Radar
+            {/* <Radar
               dataKey="mobile"
               fill="var(--color-mobile)"
               fillOpacity={0}
               stroke="var(--color-mobile)"
               strokeWidth={2}
-            />
+            /> */}
           </RadarChart>
         </ChartContainer>
       </CardContent>
@@ -83,6 +88,6 @@ export function ChartRadarLinesOnly() {
           January - June 2024
         </div>
       </CardFooter>
-    </Card>
-  )
+    </div>
+  );
 }

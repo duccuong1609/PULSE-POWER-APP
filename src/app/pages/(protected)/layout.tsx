@@ -10,6 +10,7 @@ import { Loading } from "@/components/loading";
 import userQueries from "@/app/queries/users.queries";
 import authQueries from "@/app/queries/auth.queries";
 import NotFound from "@/app/not-found/page";
+import { useUserStore } from "@/store/userStore";
 
 const ProtectedLayout = () => {
   /**
@@ -18,6 +19,7 @@ const ProtectedLayout = () => {
   const navigate = useNavigate();
   const refreshToken = localStorage.getItem(CONST.AXIOS.REFRESH_TOKEN);
   const accessToken = localStorage.getItem(CONST.AXIOS.ACCESS_TOKEN);
+  const { setUserParam } = useUserStore();
   const [fetchedAccessToken, setFetchedAccessToken] = useState<string | null>(
     null
   );
@@ -42,6 +44,7 @@ const ProtectedLayout = () => {
         CONST.AXIOS.ACCESS_TOKEN,
         refreshTokenQuery.data.access_token
       );
+      setUserParam(userInfoQuery.data?.username || "user");
     }
   }, [refreshTokenQuery.isSuccess, refreshTokenQuery.data?.access_token]);
 
