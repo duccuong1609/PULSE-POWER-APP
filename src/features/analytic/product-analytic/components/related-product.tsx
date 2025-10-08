@@ -8,27 +8,26 @@ import {
 import { TbCirclesRelation } from "react-icons/tb";
 import { Loading } from "@/components/loading";
 import { useQuery } from "@tanstack/react-query";
-import customerQueries from "@/app/queries/customer.queries";
-import { useCustomerStore } from "@/store/customerStore";
 import productQueries from "@/app/queries/product.queries";
 import React from "react";
 import type { PRODUCT_PROPS } from "@/services/dtos";
 import ProductCard from "../../components/ui/product-card";
 import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import { Card } from "@/components/ui/card";
+import { useProductStore } from "@/store/productStore";
 
 const RelatedSection = () => {
-  const { customer } = useCustomerStore();
+  const { product } = useProductStore();
 
   const productQuery = useQuery(productQueries.getProductListQuery());
 
   const topKProductQuery = useQuery(
-    customerQueries.getRecommendTopKProductQuery(
+    productQueries.getRecommendTopKProductQuery(
       {
-        user_id: customer?.referanceId ?? "",
+        product_id: product?.referanceId ?? "",
         top_k: 10,
       },
-      [customer?.referanceId ?? "", customer?.name ?? ""],
+      [product?.referanceId ?? "", product?.name ?? ""],
       {
         enabled: false,
       }

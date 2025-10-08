@@ -65,7 +65,7 @@ const ProductAnalyticCard = () => {
                   className={` text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md`}
                 >
                   <IconTrendingUp />
-                  Badge
+                  {product?.referanceId}
                 </Badge>
               </CardAction>
               <CardAction>

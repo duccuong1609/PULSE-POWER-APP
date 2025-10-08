@@ -52,7 +52,7 @@ const AnalyticSearch = ({
         <div className="flex-1 flex">
           <Popover>
             <PopoverTrigger asChild>
-              <Input type="search" placeholder="Hotdog, etc..." value={query} />
+              <Input type="search" placeholder="Hotdog, etc..." value={query} readOnly />
             </PopoverTrigger>
             <PopoverContent className="w-[var(--radix-popover-trigger-width)] mt-2 h-96 overflow-y-auto flex flex-col gap-4 custom-scrollbar relative transform transition-all duration-300 ease-in-out">
               <Loading show={data.length === 0 || isLoading} />

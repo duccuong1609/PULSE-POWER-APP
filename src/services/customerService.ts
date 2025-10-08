@@ -3,12 +3,13 @@ import type { CUSTOMER_PROPS, RECOMMEND_DTO, RECOMMEND_PROPS } from "./dtos"
 
 const CUSTOMER_API = {
     GETALL: '/customer',
-    RECOMMEND: '/customer/recommend'
+    RECOMMEND: '/customer/recommend',
+    RECOMMEND_NEU_MF: '/customer/recommend_neuMF'
 }
 
 const getRecommendTopKProduct = async (payload: RECOMMEND_DTO) : Promise<RECOMMEND_PROPS> => {
     return await request<RECOMMEND_DTO, RECOMMEND_PROPS>({
-        url: CUSTOMER_API.RECOMMEND,
+        url: CUSTOMER_API.RECOMMEND_NEU_MF,
         method: 'POST',
         body: payload,
         type: 'protected'

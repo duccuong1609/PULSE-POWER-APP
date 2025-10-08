@@ -59,13 +59,23 @@ export interface RECOMMEND_DTO {
     top_k: number,
 }
 
+export interface RECOMMEND_PRODUCT_DTO {
+    product_id: string,
+    top_k: number,
+}
+
 export interface RECOMMEND_ITEM_PROPS {
-    MaHang: string,
-    Score: number,
-    Rank: number
+    product_id: string,
+    score: number,
+    rank: number
 }
 
 export interface RECOMMEND_PROPS {
     user_id: string,
+    recommendations: RECOMMEND_ITEM_PROPS[],
+}
+
+export interface RECOMMEND_PRODUCT_PROPS {
+    product_id: string,
     recommendations: RECOMMEND_ITEM_PROPS[],
 }
