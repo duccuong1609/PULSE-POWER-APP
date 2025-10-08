@@ -75,8 +75,8 @@ const CustomerRecommendCard = () => {
             <ChartRadarLinesOnly
               chartData={
                 topKProductQuery.data?.recommendations.map((item) => ({
-                  label: item.MaHang,
-                  value: item.Score,
+                  label: item.product_id,
+                  value: item.score,
                 })) ?? []
               }
             />
@@ -124,14 +124,14 @@ const CustomerRecommendCard = () => {
                               index < 3 ? "font-bold" : ""
                             }`}
                           >
-                            {item.MaHang}
+                            {item.product_id}
                             {
                               <Button
                                 variant={"link"}
                                 className="p-0"
                                 size={"sm"}
                                 onClick={() =>
-                                  navigator.clipboard.writeText(item.MaHang)
+                                  navigator.clipboard.writeText(item.product_id)
                                 }
                               >
                                 <FaRegCopy />
@@ -143,14 +143,14 @@ const CustomerRecommendCard = () => {
                               index < 3 ? "font-bold" : ""
                             }`}
                           >
-                            {item.Score}
+                            {item.score}
                           </TableCell>
                           <TableCell
                             className={`flex gap-2 justify-center items-center ${
                               index < 3 ? "font-bold" : ""
                             }`}
                           >
-                            {item.Rank}
+                            {item.rank}
                             {index < 3 && (
                               <FaRankingStar
                                 size={16}
