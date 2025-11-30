@@ -15,6 +15,7 @@ import Dashboard from "./app/pages/(protected)/dashboard/page";
 import Info from "./app/pages/(protected)/info/page";
 import AnalyticProduct from "./app/pages/(protected)/analytic.product/page";
 import AnalyticCustomer from "./app/pages/(protected)/analytic.customer/page";
+import Cart from "./app/pages/(protected)/cart";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/:user" element={<ProtectedLayout />}>
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="info" element={<Info />} />
+                <Route path="cart" element={<Cart />} />
                 <Route>
                   <Route path="analytic" element={<Analytic />} />
                   <Route path="analytic/product" element={<AnalyticProduct />} />

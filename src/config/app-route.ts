@@ -10,6 +10,7 @@ import {
   IconReport,
   IconSearch,
   IconSettings,
+  IconShoppingCart,
 } from "@tabler/icons-react"
 
 export const appRoutes = {
@@ -19,15 +20,20 @@ export const appRoutes = {
     avatar: "/img/fallback-avatar.png",
   },
   navMain: [
+    // {
+    //   title: "Dashboard",
+    //   url: "/dashboard",
+    //   icon: IconDashboard,
+    // },
+    // {
+    //   title: "Analytics",
+    //   url: "/analytic",
+    //   icon: IconChartBar,
+    // },
     {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: IconDashboard,
-    },
-    {
-      title: "Analytics",
-      url: "/analytic",
-      icon: IconChartBar,
+      title: "Shop",
+      url: "/cart",
+      icon: IconShoppingCart,
     },
   ],
   navClouds: [
@@ -89,11 +95,11 @@ export const appRoutes = {
       url: "/info",
       icon: IconHelp,
     },
-    {
-      title: "Search",
-      url: "#",
-      icon: IconSearch,
-    },
+    // {
+    //   title: "Search",
+    //   url: "#",
+    //   icon: IconSearch,
+    // },
   ],
   documents: [
     {

@@ -31,7 +31,7 @@ export function NavMain({
               className="bg-primary font-bold text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
             >
               <IconFileImport />
-              <span>Quick Import</span>
+              <span>Welcome !</span>
             </SidebarMenuButton>
             <a href="mailto:duccuong16092003@gmail.com">
               <Button
@@ -47,7 +47,7 @@ export function NavMain({
         </SidebarMenu>
         <SidebarMenu>
           {items.map((item) => (
-            <SidebarMenuItem key={item.title}>
+            <SidebarMenuItem className="cursor-pointer" key={item.title}>
               <Link to={`/${userParam}${item.url}`}>
                 <SidebarMenuButton tooltip={item.title}>
                   {item.icon && <item.icon />}
