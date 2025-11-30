@@ -45,6 +45,18 @@ export interface PRODUCT_PROPS {
     price?: string,
 }
 
+export interface RECOMMENDATION_ITEM {
+    product_id: string;
+    score: number;
+}
+
+export interface RECOMMEND_PRODUCT_V2_PROPS {
+    status: string;
+    input_cart: string[];
+    recommendations: RECOMMENDATION_ITEM[];
+    model_used: string;
+}
+
 export interface CUSTOMER_PROPS {
     id: number,
     referanceId: string,
