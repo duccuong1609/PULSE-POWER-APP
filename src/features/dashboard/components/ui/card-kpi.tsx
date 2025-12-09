@@ -1,7 +1,6 @@
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { IconChevronRight, IconTrendingDown, IconTrendingUp } from '@tabler/icons-react'
+import { IconTrendingDown, IconTrendingUp } from '@tabler/icons-react'
 
 type CardKPIProps = {
     cardDescription?: string,
@@ -41,21 +40,20 @@ const CardKPI = ({ cardDescription, cardTitle, cardAction, cardFooter, cardFoote
                         </Badge>
                     </CardAction>
                 </CardHeader>
-                <CardFooter className="flex-row justify-between gap-1.5 text-sm">
-                    <div className="flex-col items-start gap-1.5 text-sm">
-                        <div className="line-clamp-1 flex gap-2 font-medium">
-                            {cardFooter}
-                            {cardType === "up" && <IconTrendingUp className="size-4" />}
-                            {cardType === "down" && <IconTrendingDown className="size-4" />}
+                {(cardFooter || cardFooterDescription) && (
+                    <CardFooter className="flex-row justify-between gap-1.5 text-sm">
+                        <div className="flex-col items-start gap-1.5 text-sm">
+                            <div className="line-clamp-1 flex gap-2 font-medium">
+                                {cardFooter}
+                                {cardType === "up" && cardFooter && <IconTrendingUp className="size-4" />}
+                                {cardType === "down" && cardFooter && <IconTrendingDown className="size-4" />}
+                            </div>
+                            <div className="text-muted-foreground mt-2">
+                                {cardFooterDescription}
+                            </div>
                         </div>
-                        <div className="text-muted-foreground mt-2">
-                            {cardFooterDescription}
-                        </div>
-                    </div>
-                    <Button variant='outline' className='cursor-not-allowed'>
-                        <IconChevronRight />
-                    </Button>
-                </CardFooter>
+                    </CardFooter>
+                )}
             </Card>
         </>
     )

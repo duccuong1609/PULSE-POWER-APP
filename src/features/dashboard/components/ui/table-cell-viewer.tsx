@@ -31,7 +31,7 @@ export function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
         <div className="flex flex-col gap-4 overflow-y-auto px-4 text-sm">
           {!isMobile && (
             <>
-              <ProductAreaChart />
+              <ProductAreaChart data={[]} color={""} />
               <Separator />
               <div className="grid gap-2">
                 <div className="flex gap-2 leading-none font-medium">

@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function ProductCardSkeleton() {
   return (
-    <Card className="w-full max-w-[280px] overflow-hidden rounded-xl border bg-card text-card-foreground shadow">
+    <Card className="w-full max-w-[280px] overflow-hidden rounded-xl border shadow">
       <div className="aspect-square w-full">
         <Skeleton className="h-full w-full" />
       </div>

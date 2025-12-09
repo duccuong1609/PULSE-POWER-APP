@@ -1,5 +1,6 @@
-import { ShoppingCart, Heart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
+import React from "react";
 
 import {
     Card,
@@ -29,9 +30,11 @@ export function ProductCard({
     onAddToCart,
 }: ProductCardProps) {
 
+    const [isFlying, setIsFlying] = React.useState(false);
+
     const sizeStyles = {
         sm: {
-            imageHeight: "aspect-[4/5]",
+            imageHeight: "aspect-[5/6] max-h-32",
             padding: "p-2",
             titleSize: "text-sm",
             catSize: "text-[10px]",
@@ -65,13 +68,24 @@ export function ProductCard({
 
     const currentStyle = sizeStyles[size];
 
+    const handleAdd = () => {
+        if (onAddToCart) {
+            onAddToCart(product);
+            setIsFlying(true);
+            setTimeout(() => setIsFlying(false), 500);
+        }
+    };
+
     return (
         <Card
             className={cn(
                 "w-full h-fit overflow-hidden transition-all duration-300 hover:shadow-lg group py-0"
             )}
         >
-            <div className={cn("relative overflow-hidden bg-gray-100", currentStyle.imageHeight)}>
+            <div className={cn(
+                "relative overflow-hidden bg-gray-100",
+                currentStyle.imageHeight
+            )}>
                 {isNew && (
                     <Badge className={cn(
                         "absolute z-10 bg-red-500 hover:bg-red-600",
@@ -85,6 +99,14 @@ export function ProductCard({
                     alt={product.name}
                     className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
                 />
+                {isFlying && (
+                    <img
+                        src={product.imgUrl || "/img/product-template-img.webp"}
+                        alt=""
+                        aria-hidden
+                        className="pointer-events-none absolute inset-0 h-full w-full object-cover animate-fly-card"
+                    />
+                )}
             </div>
 
             <CardHeader className={cn("pb-0", currentStyle.padding)}>
@@ -109,7 +131,7 @@ export function ProductCard({
             <CardFooter className={cn("flex gap-2 pt-2", currentStyle.padding)}>
                 <Button
                     className={cn("flex-1 gap-2", currentStyle.buttonSize)}
-                    onClick={() => onAddToCart && onAddToCart(product)}
+                    onClick={handleAdd}
                 >
                     <ShoppingCart className={currentStyle.iconSize} />
                     {currentStyle.showButtonText && "Add to Cart"}

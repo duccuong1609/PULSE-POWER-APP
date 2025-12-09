@@ -1,0 +1,31 @@
+{
+  "total_rows": 12515,
+  "total_invoices": 4379,
+  "unique_customers": 770,
+  "unique_products": 64,
+  "total_quantity_sold": 167495,
+  "time_span_days": 163,
+  "first_date": "2025-05-30",
+  "last_date": "2025-11-10",
+  "avg_tx_per_customer": 5.69,
+  "std_tx_per_customer": 6.2,
+  "median_tx": 4,
+  "avg_items_per_customer": 217.53,
+  "top_customer_id": "KH00153",
+  "top_customer_tx": 51,
+  "top_product": "Giò Thủ (L2 500g)",
+  "top_product_qty": 22521,
+  "top_category": "Thủ",
+  "top_5_products": [
+    { "name": "Giò Thủ (L2 500g)", "qty": 22521 },
+    { "name": "Thủ mì 2 (500gr)", "qty": 18231 },
+    { "name": "Giò Thủ (L2 1Kg)", "qty": 15221 },
+    { "name": "Thủ mì 2 (1kg)", "qty": 10212 },
+    { "name": "Xúc Xích Tỏi Xông Khói (1Kg)", "qty": 8031 }
+  ],
+  "cold_product_rate": 0,
+  "avg_items_per_invoice": 2.86,
+  "median_items_per_invoice": 2,
+  "avg_qty_per_line": 13.38
+}
+

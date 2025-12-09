@@ -20,16 +20,11 @@ export const appRoutes = {
     avatar: "/img/fallback-avatar.png",
   },
   navMain: [
-    // {
-    //   title: "Dashboard",
-    //   url: "/dashboard",
-    //   icon: IconDashboard,
-    // },
-    // {
-    //   title: "Analytics",
-    //   url: "/analytic",
-    //   icon: IconChartBar,
-    // },
+    {
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: IconDashboard,
+    },
     {
       title: "Shop",
       url: "/cart",
